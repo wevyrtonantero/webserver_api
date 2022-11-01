@@ -1,4 +1,4 @@
-package main
+package pessoas
 
 import (
 	"encoding/json"
@@ -33,19 +33,20 @@ var Pessoas = []Pessoa{
 	},
 }
 
-func inicial(w http.ResponseWriter, r *http.Request) {
+func Inicial(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "Ola mundo")
 
 }
 
-func usuarios(w http.ResponseWriter, r *http.Request) {
+func Usuarios(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(Pessoas)
 
 }
-func buscaid(w http.ResponseWriter, r *http.Request) {
+func Buscaid(w http.ResponseWriter, r *http.Request) {
 
 	id := chi.URLParam(r, "id")
+
 	idint, err := strconv.Atoi(id)
 	if err != nil {
 		panic(err)
@@ -53,15 +54,19 @@ func buscaid(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(Pessoas[idint])
 
 }
+func Buscanome(w http.ResponseWriter, r *http.Request) {
 
-func main() {
+	nome := chi.URLParam(r, "nome")
+	for i := 0; i < len(Pessoas); i++ {
+		if Pessoas[i].Nome == nome {
+			json.NewEncoder(w).Encode(Pessoas[i])
 
-	r := chi.NewRouter()
-	r.Get("/", inicial)
-	r.Get("/usuarios", usuarios)
-	r.Get("/usuarios/{id}", buscaid)
+		}
 
-	println("servidor rodando na porta 8080")
+	}
+	for c, v := range Pessoas {
 
-	http.ListenAndServe(":8080", r)
+		fmt.Println(c, v.Nome)
+	}
+
 }
