@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
+	a "github.com/wevyrton/exercicio/internal/alertas"
+
 	"github.com/go-chi/chi"
 )
 
@@ -51,8 +53,15 @@ func Buscaid(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	json.NewEncoder(w).Encode(Pessoas[idint])
+	for i := 0; i < len(Pessoas); i++ {
+		if Pessoas[i].Id == idint {
+			json.NewEncoder(w).Encode(Pessoas[i])
+			return
+		}
 
+	}
+
+	json.NewEncoder(w).Encode(a.AlertaDeId)
 }
 func Buscanome(w http.ResponseWriter, r *http.Request) {
 
@@ -60,13 +69,11 @@ func Buscanome(w http.ResponseWriter, r *http.Request) {
 	for i := 0; i < len(Pessoas); i++ {
 		if Pessoas[i].Nome == nome {
 			json.NewEncoder(w).Encode(Pessoas[i])
+			return
 
 		}
 
 	}
-	for c, v := range Pessoas {
 
-		fmt.Println(c, v.Nome)
-	}
-
+	json.NewEncoder(w).Encode(a.AlertaDeNome)
 }
