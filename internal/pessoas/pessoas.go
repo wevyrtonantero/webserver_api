@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
-	a "github.com/wevyrton/exercicio/internal/alertas"
+	"github.com/wevyrton/exercicio/internal/alertas"
 
 	"github.com/go-chi/chi"
 )
@@ -36,19 +37,15 @@ var Pessoas = []Pessoa{
 }
 
 func Inicial(w http.ResponseWriter, r *http.Request) {
-
 	fmt.Fprintf(w, "Ola mundo")
-
 }
 
 func Usuarios(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(Pessoas)
-
 }
+
 func Buscaid(w http.ResponseWriter, r *http.Request) {
-
 	id := chi.URLParam(r, "id")
-
 	idint, err := strconv.Atoi(id)
 	if err != nil {
 		panic(err)
@@ -58,22 +55,17 @@ func Buscaid(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(Pessoas[i])
 			return
 		}
-
 	}
-
-	json.NewEncoder(w).Encode(a.AlertaDeId)
+	json.NewEncoder(w).Encode(alertas.AlertaDeId)
 }
-func Buscanome(w http.ResponseWriter, r *http.Request) {
 
+func Buscanome(w http.ResponseWriter, r *http.Request) {
 	nome := chi.URLParam(r, "nome")
 	for i := 0; i < len(Pessoas); i++ {
-		if Pessoas[i].Nome == nome {
+		if strings.EqualFold(Pessoas[i].Nome, nome) {
 			json.NewEncoder(w).Encode(Pessoas[i])
 			return
-
 		}
-
 	}
-
-	json.NewEncoder(w).Encode(a.AlertaDeNome)
+	json.NewEncoder(w).Encode(alertas.AlertaDeNome)
 }

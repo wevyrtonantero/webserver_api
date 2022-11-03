@@ -1,0 +1,3 @@
+git add . (Adiciona todas as alterações realizadas ao stage)
+git commit -m "o que fez"   (Confirma o que foi feito e descreve)
+git push    (Envia de fato os arquivo para seu repositorio já criado mo github)

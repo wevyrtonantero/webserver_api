@@ -10,10 +10,13 @@ import (
 func main() {
 
 	r := chi.NewRouter()
+	r.Route("/usuarios", func(r chi.Router) {
+		r.Get("/", pessoas.Usuarios)
+		r.Get("/nome/{nome}", pessoas.Buscanome)
+		r.Get("/{id}", pessoas.Buscaid)
+	})
+
 	r.Get("/", pessoas.Inicial)
-	r.Get("/usuarios", pessoas.Usuarios)
-	r.Get("/usuarios-id/{id}", pessoas.Buscaid)
-	r.Get("/usuarios-nome/{nome}", pessoas.Buscanome)
 
 	println("servidor rodando na porta 8080")
 
