@@ -26,4 +26,16 @@ Content-Type:  application/json
 
 ###
 
+DELETE   http://localhost:8080/usuarios
+Content-Type:  application/json
+
+{
+
+	"id" :4 ,
+    "nome":"Isabelle",
+    "senha":"segredo"
+	
+
+}
+
 

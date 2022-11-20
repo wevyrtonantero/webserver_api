@@ -76,22 +76,16 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-
 	Pessoas = append(Pessoas, usuario)
-	fmt.Println( Pessoas[3], "rota Criarusuario funcionando")
-
-
-
-
-
+	fmt.Println( Pessoas, "rota Criarusuario funcionando")
 }
 func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
-	
 	fmt.Println(  "rota Atualizar usuario funcionando")
-
-
-
-
-
 }
+
+func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
+	
+	fmt.Println(  "rota Deletar usuario funcionando")
+}
+
 
