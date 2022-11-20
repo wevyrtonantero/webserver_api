@@ -71,7 +71,16 @@ func Buscanome(w http.ResponseWriter, r *http.Request) {
 }
 
 func CriarUsuario(w http.ResponseWriter, r *http.Request) {
+	var usuario Pessoa
+	err := json.NewDecoder(r.Body).Decode(&usuario)
+	if err != nil {
+		panic(err)
+	}
+	
+	fmt.Println( usuario, "rota Criarusuario funcionando")
 
-	fmt.Println( "rota Criarusuario funcionando")
+
+
+
 
 }
