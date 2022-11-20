@@ -85,4 +85,13 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 
 
 }
+func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
+	
+	fmt.Println(  "rota Atualizar usuario funcionando")
+
+
+
+
+
+}
 
