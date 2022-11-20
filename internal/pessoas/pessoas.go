@@ -69,3 +69,9 @@ func Buscanome(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewEncoder(w).Encode(alertas.AlertaDeNome)
 }
+
+func CriarUsuario(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println( "rota Criarusuario funcionando")
+
+}

@@ -14,6 +14,7 @@ func main() {
 		r.Get("/", pessoas.Usuarios)
 		r.Get("/nome/{nome}", pessoas.Buscanome)
 		r.Get("/{id}", pessoas.Buscaid)
+		r.Post("/", pessoas.CriarUsuario)
 	})
 
 	r.Get("/", pessoas.Inicial)
