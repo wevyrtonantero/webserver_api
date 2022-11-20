@@ -76,11 +76,13 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	
-	fmt.Println( usuario, "rota Criarusuario funcionando")
+
+	Pessoas = append(Pessoas, usuario)
+	fmt.Println( Pessoas[3], "rota Criarusuario funcionando")
 
 
 
 
 
 }
+
