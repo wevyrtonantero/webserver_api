@@ -12,7 +12,7 @@ Content-Type:  application/json
 
 ###
 
-PUT  http://localhost:8080/usuarios
+PUT  http://localhost:8080/usuarios/
 Content-Type:  application/json
 
 {
@@ -26,16 +26,8 @@ Content-Type:  application/json
 
 ###
 
-DELETE   http://localhost:8080/usuarios
+DELETE   http://localhost:8080/usuarios/2
 Content-Type:  application/json
 
-{
-
-	"id" :4 ,
-    "nome":"Isabelle",
-    "senha":"segredo"
-	
-
-}
 
 
