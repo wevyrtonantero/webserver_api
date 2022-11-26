@@ -80,6 +80,15 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(Pessoas, "rota Criarusuario funcionando")
 }
 func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	idint, err := strconv.Atoi(id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode("NAO EXISTE ESSE USUARIO")
+	}
+
+	fmt.Println(idint, "atualizar")
+
 	fmt.Println("rota Atualizar usuario funcionando")
 }
 
@@ -91,19 +100,10 @@ func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode("NAO EXISTE ESSE USUARIO")
 	}
 	for indice, pessoa := range Pessoas {
-		fmt.Println(indice)
-		if idint == pessoa.Id {
-			ExcluirUsuario(&Pessoas, indice)
+				if idint == pessoa.Id {
+			Pessoas = append(Pessoas[:indice], Pessoas[indice+1:]...)
 			return
 		}
 	}
-
-}
-
-func ExcluirUsuario(s *[]Pessoa, index int) {
-	*s = append(*s, s )
-
-	//s = append(s[:index], s[index+1:]...)
-//	fmt.Println(s)
 
 }
