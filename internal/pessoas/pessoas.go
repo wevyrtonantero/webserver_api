@@ -13,9 +13,9 @@ import (
 )
 
 type Pessoa struct {
-	Id    int
-	Nome  string
-	Senha string
+	Id    int    `json:"id"`
+	Nome  string `json:"nome"`
+	Senha string `json:"senha"`
 }
 
 var Pessoas = []Pessoa{
@@ -80,16 +80,17 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(Pessoas, "rota Criarusuario funcionando")
 }
 func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
-	idint, err := strconv.Atoi(id)
+	var usuario Pessoa
+	err := json.NewDecoder(r.Body).Decode(&usuario)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode("NAO EXISTE ESSE USUARIO")
+		panic(err)
+	}
+	for indice, pessoa := range Pessoas {
+		if usuario.Id == pessoa.Id {
+			Pessoas[indice] = usuario
+		}
 	}
 
-	fmt.Println(idint, "atualizar")
-
-	fmt.Println("rota Atualizar usuario funcionando")
 }
 
 func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
@@ -100,7 +101,7 @@ func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode("NAO EXISTE ESSE USUARIO")
 	}
 	for indice, pessoa := range Pessoas {
-				if idint == pessoa.Id {
+		if idint == pessoa.Id {
 			Pessoas = append(Pessoas[:indice], Pessoas[indice+1:]...)
 			return
 		}

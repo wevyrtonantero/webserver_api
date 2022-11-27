@@ -15,7 +15,7 @@ func main() {
 		r.Get("/nome/{nome}", pessoas.Buscanome)
 		r.Get("/{id}", pessoas.Buscaid)
 		r.Post("/", pessoas.CriarUsuario)
-		r.Put("/{id}", pessoas.AtualizarUsuario)
+		r.Put("/", pessoas.AtualizarUsuario)
 		r.Delete("/{id}", pessoas.DeletarUsuario)
 	})
 

@@ -1,24 +1,23 @@
+GET  http://localhost:8080/usuarios
+
+###
 POST http://localhost:8080/usuarios
 Content-Type:  application/json
-
 {
-
 	"id" : 1,
     "nome":"Isabelle",
     "senha":"segredo"
-	
+}
+###
+PUT  http://localhost:8080/usuarios
+Content-Type:  application/json
 
+{
+	"id" : 1,
+    "nome":"Nenem da Silva Filho",
+    "senha":"MAMA EU"
 }
 
 ###
-
-PUT  http://localhost:8080/usuarios/585456868464
-Content-Type:  application/json
-
-###
-
 DELETE   http://localhost:8080/usuarios/5
 Content-Type:  application/json
-
-
-
