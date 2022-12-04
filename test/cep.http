@@ -1,0 +1,28 @@
+GET http://localhost:8080/usuarios/cep/2
+
+
+###
+POST http://localhost:8080/usuarios/cep
+Content-Type:  application/json
+{
+   "rua":"Henriqueta Lisboa",
+   "numero":100,
+   "bairro":"Jardim Amanda",
+   "cidade":"Hortolândia",
+   "uf":"São Paulo"
+}
+###
+PUT http://localhost:8080/usuarios/cep
+Content-Type:  application/json
+
+{
+   "Rua":"Olympia da Silveira Francoo",
+   "Numero":56,
+   "Bairro":"Jardim Arizona",
+   "Cidade":"Itatiba",
+   "Uf":"São Paulo"
+}
+
+###
+DELETE http://localhost:8080/usuarios/cep
+Content-Type:  application/json

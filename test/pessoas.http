@@ -1,7 +1,7 @@
-GET  http://localhost:8080/usuarios
+GET  http://localhost:8080/usuarios/cep
 
 ###
-POST http://localhost:8080/usuarios
+POST http://localhost:8080/cep
 Content-Type:  application/json
 {
 	"id" : 1,
@@ -19,5 +19,5 @@ Content-Type:  application/json
 }
 
 ###
-DELETE   http://localhost:8080/usuarios/5
+DELETE   http://localhost:8080/usuarios/1
 Content-Type:  application/json
