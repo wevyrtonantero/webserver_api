@@ -18,14 +18,14 @@ func main() {
 		r.Post("/", pessoas.CriarUsuario)
 		r.Put("/", pessoas.AtualizarUsuario)
 		r.Delete("/{id}", pessoas.DeletarUsuario)
+	})
 
-		// Route /cep
-
-		r.Get("/cep", cep.ListarCep)
-		r.Get("/cep/{id}", cep.BuscarCep)
-		r.Post("/cep", cep.CriarCep)
-		r.Put("/cep", cep.AtualizarCep)
-		r.Delete("/cep/{bairro}", cep.DeletarCep)
+	r.Route("/cep", func(r chi.Router) {
+		r.Get("/", cep.ListarCep)
+		r.Get("/{id}", cep.BuscarCep)
+		r.Post("/", cep.CriarCep)
+		r.Put("/", cep.AtualizarCep)
+		r.Delete("/{bairro}", cep.DeletarCep)
 	})
 
 	r.Get("/", pessoas.Inicial)

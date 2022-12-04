@@ -96,7 +96,6 @@ func BuscarCep(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Println(" funcionando...BuscarCep GET...")
 }
 
 func CriarCep(w http.ResponseWriter, r *http.Request) {
@@ -106,13 +105,25 @@ func CriarCep(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 	Enderecos = append(Enderecos, morador)
-
 }
 
 func AtualizarCep(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(" funcionando...CriarCep PUT...")
+	var usuario Logradouro
+	err := json.NewDecoder(r.Body).Decode(&usuario)
+	if err != nil {
+		panic(err)
+	}
+
+	for indice, endereco := range Enderecos {
+		if usuario.Pessoa.Id == Enderecos[indice].Pessoa.Id {
+			Enderecos[indice] = usuario
+			fmt.Printf("%v ALterado\n", endereco.Pessoa.Nome)
+		}
+	}
+
 }
 
 func DeletarCep(w http.ResponseWriter, r *http.Request) {
+	
 	fmt.Println(" funcionando...DeletarCep DELETE...")
 }

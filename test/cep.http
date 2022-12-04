@@ -1,9 +1,11 @@
-GET http://localhost:8080/usuarios/cep
-
+GET http://localhost:8080/cep
 
 
 ###
-POST http://localhost:8080/usuarios/cep
+GET http://localhost:8080/cep/5
+
+###
+POST http://localhost:8080/cep
 Content-Type:  application/json
 
 {
@@ -20,17 +22,23 @@ Content-Type:  application/json
 
 }
 ###
-PUT http://localhost:8080/usuarios/cep
+PUT http://localhost:8080/cep
 Content-Type:  application/json
 
 {
-   "Rua":"Olympia da Silveira Francoo",
-   "Numero":56,
-   "Bairro":"Jardim Arizona",
-   "Cidade":"Itatiba",
-   "Uf":"São Paulo"
+   "rua":"Assaltos lulas Cadeieiro",
+   "numero":24,
+   "bairro":"Ladro City",
+   "cidade":"Corrupitanos",
+   "uf":"Brasilia",
+   "pessoa": {
+      "id": 5,
+      "nome": "Maria Casacio",
+      "senha": "10587"
+   }
+
 }
 
 ###
-DELETE http://localhost:8080/usuarios/cep
+DELETE http://localhost:8080/cep
 Content-Type:  application/json
