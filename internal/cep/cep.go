@@ -88,8 +88,14 @@ func BuscarCep(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode("NAO EXISTE ESSE USUARIO")
 	}
+	for _, cep := range Enderecos {
+		if cep.Pessoas.Id == idint {
+			json.NewEncoder(w).Encode(cep)
 
-	fmt.Println(idint, " funcionando...BuscarCep GET...")
+		}
+	}
+
+	fmt.Println(" funcionando...BuscarCep GET...")
 }
 func CriarCep(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("logradouro funcionando...CriarLogradouro")
