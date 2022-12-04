@@ -1,15 +1,23 @@
-GET http://localhost:8080/usuarios/cep/2
+GET http://localhost:8080/usuarios/cep
+
 
 
 ###
 POST http://localhost:8080/usuarios/cep
 Content-Type:  application/json
+
 {
-   "rua":"Henriqueta Lisboa",
-   "numero":100,
-   "bairro":"Jardim Amanda",
-   "cidade":"Hortolândia",
-   "uf":"São Paulo"
+   "rua":"Wellinto Brother",
+   "numero":24,
+   "bairro":"Erica city",
+   "cidade":"Valinhos",
+   "uf":"São Paulo",
+   "pessoa": {
+      "id": 5,
+      "nome": "Maria Casacio",
+      "senha": "10587"
+   }
+
 }
 ###
 PUT http://localhost:8080/usuarios/cep

@@ -26,3 +26,6 @@ git push    (Envia de fato os arquivo para seu repositorio já criado mo github)
 		c.Delete("/{bairro}", cep.DeletarCep)
 
 	})
+
+
+
