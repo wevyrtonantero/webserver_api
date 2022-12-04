@@ -124,6 +124,16 @@ func AtualizarCep(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeletarCep(w http.ResponseWriter, r *http.Request) {
-	
-	fmt.Println(" funcionando...DeletarCep DELETE...")
+	id := chi.URLParam(r, "id")
+	idint, err := strconv.Atoi(id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode("NAO EXISTE ESSE USUARIO")
+	}
+	for indice, endereco := range Enderecos {
+		if endereco.Pessoa.Id == idint {
+			Enderecos = append(Enderecos[:indice], Enderecos[indice+1:]...)
+
+		}
+	}
 }

@@ -25,7 +25,7 @@ func main() {
 		r.Get("/{id}", cep.BuscarCep)
 		r.Post("/", cep.CriarCep)
 		r.Put("/", cep.AtualizarCep)
-		r.Delete("/{bairro}", cep.DeletarCep)
+		r.Delete("/{id}", cep.DeletarCep)
 	})
 
 	r.Get("/", pessoas.Inicial)

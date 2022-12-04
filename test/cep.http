@@ -2,9 +2,11 @@ GET http://localhost:8080/cep
 
 
 ###
+
 GET http://localhost:8080/cep/5
 
 ###
+
 POST http://localhost:8080/cep
 Content-Type:  application/json
 
@@ -22,6 +24,7 @@ Content-Type:  application/json
 
 }
 ###
+
 PUT http://localhost:8080/cep
 Content-Type:  application/json
 
@@ -40,5 +43,6 @@ Content-Type:  application/json
 }
 
 ###
-DELETE http://localhost:8080/cep
+
+DELETE http://localhost:8080/cep/5
 Content-Type:  application/json
