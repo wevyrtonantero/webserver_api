@@ -86,11 +86,10 @@ func BuscarCep(w http.ResponseWriter, r *http.Request) {
 	idint, err := strconv.Atoi(id)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode("NAO EXISTE ESTE USUARIO")
+		json.NewEncoder(w).Encode("NAO EXISTE ESSE USUARIO")
 	}
-	fmt.Println(idint)
 
-	fmt.Println(" funcionando...BuscarCep GET...")
+	fmt.Println(idint, " funcionando...BuscarCep GET...")
 }
 func CriarCep(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("logradouro funcionando...CriarLogradouro")
