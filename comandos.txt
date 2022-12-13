@@ -3,29 +3,18 @@ git commit -m "o que fez"   (Confirma o que foi feito e descreve)
 git push    (Envia de fato os arquivo para seu repositorio já criado mo github)
 
 
-
-
-
-****************************************************************TAREFAS DO ELTON****************************************************************
-
--CRIAR UMA STRUCT DE ENDEREÇOS
-
--FAZER UM CRUD NOS ENDEREÇOS
-
--LISTAR AS PESSOAS JUNTAMENTE COM ENDEREÇO
-
-
-
-//rota dos campos para endereço!!!
-	
-	c.Route("/cep", func(c chi.Router) {
-		c.Get("/", cep.ListarCep)
-		c.Get("/{nome}", cep.BuscarCep)
-		c.Post("/", cep.CriarCep)
-		c.Put("/", cep.AtualizarCep)
-		c.Delete("/{bairro}", cep.DeletarCep)
-
-	})
-
-
-
+---------------------------docker------------------------------------- 
+docker-compose up (sobe o container)
+docker-compose down (desce os containers desativa)
+docker ps (Lista todos os containers UP)
+docker ps -a (lista TODOS containers -up/down)
+docker exec -it mysql bash (acessa o terminal do container)
+------------------Dentro do terminal Mysql---------------------------sempre usar ;  no final
+mysql -uroot -p (Credencia a entrada no mysql)
+show databases (Mostra todos os Bancos de dados)
+use safisa (use "nome do banco" acessa o banco de dados que vc quer usar)
+show tables (Verifica se exite tabelas no banco de dados em uso)
+ctr + L ("control éle ---- Limpa o terminal)
+desc enderecos (lista os itens da tabela "no caso usei a tabela enderecos")
+create table enderecos(rua varchar(255), numero varchar(255));                  (cria a tabela)
+select * from enderecos; (visaliza DADOS da tabela)
