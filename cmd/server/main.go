@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -11,25 +10,6 @@ import (
 )
 
 func main() {
-
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/safisa")
-	if err != nil {
-		panic(err)
-	}
-	stmt, err := db.Prepare("insert into enderecos(rua, numero) values(?,?)")
-	if err != nil {
-		panic(err)
-	}
-
-	defer stmt.Close()
-
-	_, err = stmt.Exec(
-		cep.Enderecos[0].Rua,
-		cep.Enderecos[0].Numero,
-	)
-	if err != nil {
-		panic(err)
-	}
 
 	r := chi.NewRouter()
 	r.Route("/usuarios", func(r chi.Router) {
