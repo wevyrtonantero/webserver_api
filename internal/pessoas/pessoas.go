@@ -1,6 +1,7 @@
 package pessoas
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -71,15 +72,35 @@ func Buscanome(w http.ResponseWriter, r *http.Request) {
 }
 
 func CriarUsuario(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("rota Criarusuario funcionando")
-	
+
 	var usuario Pessoa
+
 	err := json.NewDecoder(r.Body).Decode(&usuario)
 	if err != nil {
 		panic(err)
 	}
-	Pessoas = append(Pessoas, usuario)
-	fmt.Println(Pessoas, "rota Criarusuario funcionando")
+
+	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/safisa")
+	if err != nil {
+		panic(err)
+	}
+
+	stmt, err := db.Prepare("insert into usuarios(id, nome, senha) values(?,?,?)")
+	if err != nil {
+		panic(err)
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(
+		usuario.Id,
+		usuario.Nome,
+		usuario.Senha,
+	)
+	if err != nil {
+		panic(err)
+	}
+
 }
 func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
 	var usuario Pessoa

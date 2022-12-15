@@ -3,11 +3,13 @@ GET  http://localhost:8080/usuarios/
 ###
 POST http://localhost:8080/usuarios
 Content-Type:  application/json
+
 {
-	"id" : 1,
-    "nome":"Isabelle",
-    "senha":"segredo"
+	"id" : 26,
+    "nome":"Gabrielle Martins",
+    "senha":"familia é tudo"
 }
+
 ###
 PUT  http://localhost:8080/usuarios
 Content-Type:  application/json
@@ -15,7 +17,7 @@ Content-Type:  application/json
 {
 	"id" : 1,
     "nome":"Nenem da Silva Filho",
-    "senha":"MAMA EU"
+    "senha":"585487"
 }
 
 ###
