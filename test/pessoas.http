@@ -1,4 +1,4 @@
-GET  http://localhost:8080/usuarios/
+GET  http://localhost:8080/usuarios
 
 ###
 POST http://localhost:8080/usuarios
@@ -6,8 +6,8 @@ Content-Type:  application/json
 
 {
 	"id" : 26,
-    "nome":"Gabrielle Martins",
-    "senha":"familia é tudo"
+    "nome":"Wevyrton Antero",
+    "senha":"familia e tudo"
 }
 
 ###

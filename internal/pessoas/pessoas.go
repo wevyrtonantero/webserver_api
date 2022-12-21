@@ -3,7 +3,7 @@ package pessoas
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
+	 "fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -42,7 +42,35 @@ func Inicial(w http.ResponseWriter, r *http.Request) {
 }
 
 func Usuarios(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(Pessoas)
+	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/safisa")
+	if err != nil {
+		panic(err)
+	}
+
+	defer db.Close()
+
+	rows, err := db.Query("select * from usuarios")
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+
+	var usuarios []Pessoa
+
+	for rows.Next() {
+
+		var usuario Pessoa
+		
+		err := rows.Scan(&usuario.Id, &usuario.Nome, &usuario.Senha)
+		if err != nil {
+			panic(err)
+	
+		}
+		usuarios = append(usuarios, usuario)
+	}
+	json.NewEncoder(w).Encode(usuarios)
+
 }
 
 func Buscaid(w http.ResponseWriter, r *http.Request) {
