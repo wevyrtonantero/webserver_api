@@ -3,7 +3,7 @@ package pessoas
 import (
 	"database/sql"
 	"encoding/json"
-	 "fmt"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -42,7 +42,7 @@ func Inicial(w http.ResponseWriter, r *http.Request) {
 }
 
 func Usuarios(w http.ResponseWriter, r *http.Request) {
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/safisa")
+	db, err := sql.Open("mysql", "root:wedeju180587@tcp(localhost:3306)/safisa")
 	if err != nil {
 		panic(err)
 	}
@@ -61,11 +61,11 @@ func Usuarios(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 
 		var usuario Pessoa
-		
+
 		err := rows.Scan(&usuario.Id, &usuario.Nome, &usuario.Senha)
 		if err != nil {
 			panic(err)
-	
+
 		}
 		usuarios = append(usuarios, usuario)
 	}
@@ -108,14 +108,14 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	db, err := sql.Open("mysql", "root:root@tcp(localhost:3306)/safisa")
+	db, err := sql.Open("mysql", "root:wedeju180587@tcp(localhost:3306)/safisa")
 	if err != nil {
 		panic(err)
 	}
 
 	stmt, err := db.Prepare("insert into usuarios(id, nome, senha) values(?,?,?)")
 	if err != nil {
-		panic(err)
+		w.WriteHeader(http.StatusInternalServerError)
 	}
 
 	defer stmt.Close()
@@ -126,36 +126,56 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 		usuario.Senha,
 	)
 	if err != nil {
-		panic(err)
+		w.WriteHeader(http.StatusInternalServerError)
 	}
 
 }
 func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
 	var usuario Pessoa
-	err := json.NewDecoder(r.Body).Decode(&usuario)
+	json.NewDecoder(r.Body).Decode(&usuario)
+
+	db, err := sql.Open("mysql", "root:wedeju180587@tcp(localhost:3306)/safisa")
 	if err != nil {
-		panic(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
-	for indice, pessoa := range Pessoas {
-		if usuario.Id == pessoa.Id {
-			Pessoas[indice] = usuario
-		}
+
+	stmt, err := db.Prepare("UPDATE usuarios SET nome = ?, senha = ? WHERE id = ?")
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(usuario.Nome, usuario.Senha, usuario.Id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 }
 
 func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
+
 	id := chi.URLParam(r, "id")
-	idint, err := strconv.Atoi(id)
+
+	db, err := sql.Open("mysql", "root:wedeju180587@tcp(localhost:3306)/safisa")
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode("NAO EXISTE ESSE USUARIO")
+		return
 	}
-	for indice, pessoa := range Pessoas {
-		if idint == pessoa.Id {
-			Pessoas = append(Pessoas[:indice], Pessoas[indice+1:]...)
-			return
-		}
+
+	stmt, err := db.Prepare("delete from usuarios where id = ?")
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 }
