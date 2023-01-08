@@ -38,7 +38,7 @@ func Inicial(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Ola mundo")
 }
 
-func Usuarios(w http.ResponseWriter, r *http.Request) {
+func Usuarios(w http.ResponseWriter, r *http.Request) { //Pronto, nao ha necessidade de validação
 	db, err := sql.Open("mysql", "root:wedeju180587@tcp(localhost:3306)/safisa")
 	if err != nil {
 		panic(err)
@@ -70,7 +70,7 @@ func Usuarios(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func Buscaid(w http.ResponseWriter, r *http.Request) {
+func Buscaid(w http.ResponseWriter, r *http.Request) { //pronto, com validação
 	id := chi.URLParam(r, "id")
 	idint, err := strconv.Atoi(id)
 	if err != nil {
@@ -79,7 +79,7 @@ func Buscaid(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if idint == 0 {
+	if idint <= 0 {
 
 		fmt.Fprintf(w, "id deve ser maior que ZERO")
 		return
@@ -113,9 +113,8 @@ func Buscaid(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func Buscanome(w http.ResponseWriter, r *http.Request) {
+func Buscanome(w http.ResponseWriter, r *http.Request) { //pronto, com validação
 	nome := chi.URLParam(r, "nome")
-	fmt.Println(nome)
 
 	db, err := sql.Open("mysql", "root:wedeju180587@tcp(localhost:3306)/safisa")
 	if err != nil {
@@ -127,21 +126,27 @@ func Buscanome(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 	defer rows.Close()
-	fmt.Println(nome)
 	var usuario Pessoa
 	for rows.Next() {
 		err := rows.Scan(&usuario.Id, &usuario.Nome, &usuario.Senha)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
-		json.NewEncoder(w).Encode(usuario)
-		fmt.Println(nome)
+		if usuario.Nome == nome {
+			json.NewEncoder(w).Encode(usuario)
+			w.WriteHeader(http.StatusOK)
+			return
+		} else {
+
+			json.NewEncoder(w).Encode("Verifique o nome digitado e tente novamente")
+			w.WriteHeader(http.StatusBadRequest)
+		}
 
 	}
 
 }
 
-func CriarUsuario(w http.ResponseWriter, r *http.Request) {
+func CriarUsuario(w http.ResponseWriter, r *http.Request) { //Pronto, com validação
 
 	var usuario Pessoa
 	//pegando dados do Bory, que foi difgitado pelo usuario
@@ -158,7 +163,7 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	//validando usuario
 	if usuario.Id <= 0 {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "Usuario deve ser maior que ZERO")
+		fmt.Fprintf(w, "Id deve ser maior que ZERO")
 		return
 	} else if usuario.Nome == "" || usuario.Senha == "" {
 		w.WriteHeader(http.StatusBadRequest)
@@ -204,16 +209,49 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 	}
+	fmt.Fprintf(w, "Usuário Criado com sucesso")
 	w.WriteHeader(http.StatusOK)
 
 }
-func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
+func AtualizarUsuario(w http.ResponseWriter, r *http.Request) { //Pronto , com validação
 	var usuario Pessoa
 	json.NewDecoder(r.Body).Decode(&usuario)
 
 	db, err := sql.Open("mysql", "root:wedeju180587@tcp(localhost:3306)/safisa")
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if usuario.Senha == "" || usuario.Nome == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Todos os Campos sao obrigatorios")
+		return
+	}
+	if usuario.Id <= 0 {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Id deve ser maior que ZERO")
+		return
+	}
+
+	rows, err := db.Query("select * from usuarios") //selec usado somente para validar a duplicidade de Id
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	var usuariox Pessoa
+	for rows.Next() {
+
+		err := rows.Scan(&usuariox.Id, &usuariox.Nome, &usuariox.Senha)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if usuario.Id != usuariox.Id {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Usuario nao cadastrado!\nVerifique o Id digitado e tente novamente")
 		return
 	}
 
@@ -229,16 +267,50 @@ func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	fmt.Fprintf(w, "Usuário atualizado com sucesso")
 	w.WriteHeader(http.StatusOK)
+
 }
 
-func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
+func DeletarUsuario(w http.ResponseWriter, r *http.Request) {//Pronto, com validaçõa
 
 	id := chi.URLParam(r, "id")
+	idint, err := strconv.Atoi(id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	if idint <= 0 {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Id deve ser maior que ZERO")
+		return
+	}
 
 	db, err := sql.Open("mysql", "root:wedeju180587@tcp(localhost:3306)/safisa")
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	rows, err := db.Query("select * from usuarios") //selec usado somente para validar a duplicidade de Id
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	var usuariox Pessoa
+
+	for rows.Next() {
+
+		err := rows.Scan(&usuariox.Id, &usuariox.Nome, &usuariox.Senha)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if idint != usuariox.Id {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "Usuario nao cadastrado!\nVerifique o Id digitado e tente novamente")
 		return
 	}
 
@@ -249,10 +321,12 @@ func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(id)
+	_, err = stmt.Exec(idint)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	fmt.Fprintf(w, "Usuario Excluido com sucesso")
+
 	w.WriteHeader(http.StatusOK)
 }
