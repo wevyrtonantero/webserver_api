@@ -19,3 +19,11 @@ ctr + L ("control éle ---- Limpa o terminal)
 desc enderecos (lista os itens da tabela "no caso usei a tabela enderecos")
 create table enderecos(rua varchar(255), numero varchar(255));                  (cria a tabela)
 select * from enderecos; (visaliza DADOS da tabela)
+
+
+
+
+
+
+
+	

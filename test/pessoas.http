@@ -1,15 +1,23 @@
 
 
-GET  http://localhost:8080/usuarios
+
+GET  http://localhost:8080/usuarios/nome/   
+
+###
+
+GET  http://localhost:8080/usuarios/0
+
+###
+GET  http://localhost:8080/usuarios/
 
 ###
 POST http://localhost:8080/usuarios
 Content-Type:  application/json
 
 {
-	"id" : 30,
-    "nome":"G braz",
-    "senha":"teste"
+	"id" : 7,
+    "nome":"Zeca Pagodinho",
+    "senha":"portela"
 }
 
 ###
@@ -17,11 +25,11 @@ PUT  http://localhost:8080/usuarios
 Content-Type:  application/json
 
 {
-	"id" : 3,
-    "nome":"Nenem da Silva Filho",
-    "senha":"585487"
+	"id" : ,
+    "nome":"atualizado",
+    "senha":"3245678"
 }
 
 ###
-DELETE   http://localhost:8080/usuarios/12
+DELETE   http://localhost:8080/usuarios/1
 Content-Type:  application/json
