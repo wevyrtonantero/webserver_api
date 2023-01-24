@@ -5,7 +5,7 @@ GET  http://localhost:8080/usuarios/nome/Alcione
 
 ###
 
-GET  http://localhost:8080/usuarios/12
+GET  http://localhost:8080/usuarios/157
 
 ###
 GET  http://localhost:8080/usuarios/
@@ -16,8 +16,8 @@ Content-Type:  application/json
 
 {
 	"id" : 157,
-    "nome":"Dudu Nobre",
-    "senha":"faixa"
+    "nome":"fdhdfyh",
+    "senha":"tyjtfytfyj"
 }
 
 ###
@@ -25,9 +25,9 @@ PUT  http://localhost:8080/usuarios
 Content-Type:  application/json
 
 {
-	"id" : 154,
-    "nome":"lddddddddddd",
-    "senha":"fffghdfgdfghfdghdfghdfhfdghfff"
+	"id" : 157,
+    "nome":"thiaguinho",
+    "senha":"banjo"
 }
 
 ###

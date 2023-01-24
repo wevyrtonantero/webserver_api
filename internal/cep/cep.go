@@ -19,10 +19,6 @@ type Logradouro struct {
 	Pessoa pessoas.Pessoa `json:"pessoa"`
 }
 
-var morador0 pessoas.Pessoa = pessoas.Pessoas[0]
-var morador1 pessoas.Pessoa = pessoas.Pessoas[1]
-var morador2 pessoas.Pessoa = pessoas.Pessoas[2]
-
 var Enderecos = []Logradouro{
 	{
 		Rua:    "Henriqueta Lisboa",
@@ -30,7 +26,7 @@ var Enderecos = []Logradouro{
 		Bairro: "Jardim Amanda",
 		Cidade: "Hortolândia",
 		Uf:     "São Paulo",
-		Pessoa: morador0,
+		//Pessoa: morador0,
 	},
 
 	{
@@ -39,7 +35,7 @@ var Enderecos = []Logradouro{
 		Bairro: "Nova Cidade Jardim",
 		Cidade: "Jundiai",
 		Uf:     "São Paulo",
-		Pessoa: morador1,
+		//Pessoa: morador1,
 	},
 
 	{
@@ -48,7 +44,7 @@ var Enderecos = []Logradouro{
 		Bairro: "Comendador Soares",
 		Cidade: "Nova Iguaçu",
 		Uf:     "Rio de Janeiro",
-		Pessoa: morador2,
+		//Pessoa: morador2,
 	},
 	{
 		Rua:    "Henriqueta Lisboa",

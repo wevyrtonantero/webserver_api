@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -11,14 +12,24 @@ import (
 
 func main() {
 
+	db, err := sql.Open("mysql", "root:wedeju180587@tcp(localhost:3306)/safisa")
+	if err != nil {
+		panic(err)
+	}
+
+
+	p, err := pessoas.NovaPessoa(db)
+	if err != nil {
+		panic(err)
+	}
+
 	r := chi.NewRouter()
 	r.Route("/usuarios", func(r chi.Router) {
-		r.Get("/", pessoas.Usuarios)
-		r.Get("/nome/{nome}", pessoas.Buscanome)
-		r.Get("/{id}", pessoas.Buscaid)
-		r.Post("/", pessoas.CriarUsuario)
-		r.Put("/", pessoas.AtualizarUsuario)
-		r.Delete("/{id}", pessoas.DeletarUsuario)
+		r.Get("/", p.Usuarios)
+		r.Get("/{id}", p.BuscarPorID)
+		r.Post("/", p.AtualizarUsuario)
+		r.Put("/", p.AtualizarUsuario)
+		r.Delete("/{id}", p.DeletarUsuario)
 	})
 
 	r.Route("/cep", func(r chi.Router) {
@@ -28,8 +39,6 @@ func main() {
 		r.Put("/", cep.AtualizarCep)
 		r.Delete("/{id}", cep.DeletarCep)
 	})
-
-	r.Get("/", pessoas.Inicial)
 
 	println("servidor rodando na porta 8080")
 
